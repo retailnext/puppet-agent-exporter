@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "config:base",
+    ":automergeAll",
+    ":gitSignOff"
+  ],
+  "postUpdateOptions": [
+    "gomodTidy"
+  ]
+}

@@ -1,0 +1,35 @@
+project_name: puppet-agent-exporter
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - binary: puppet-agent-exporter
+    env:
+      - CGO_ENABLED=0
+    flags:
+      - -trimpath
+    goos:
+      - linux
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w
+nfpms:
+  - package_name: puppet-agent-exporter
+    formats:
+      - deb
+    license: Apache 2.0
+    homepage: https://github.com/dhaivat/apt-gcs
+    maintainer: Erik Swanson <erik@retailnext.net>
+    description: Prometheus Exporter for Puppet Agent
+checksum:
+  name_template: 'checksums.txt'
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^chore\(ci\):'
+      - '^chore\(deps\):'
+      - '^docs:'
+      - '^test:'
