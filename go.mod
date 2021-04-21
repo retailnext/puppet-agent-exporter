@@ -11,7 +11,7 @@ require (
 	go.uber.org/zap v1.16.0
 	golang.org/x/lint v0.0.0-20201208152925-83fdc39ff7b5 // indirect
 	golang.org/x/sys v0.0.0-20210420205809-ac73e9fd8988 // indirect
-	golang.org/x/term v0.0.0-20210406210042-72f3dc4e9b72
+	golang.org/x/term v0.0.0-20210421210424-b80969c67360
 	golang.org/x/tools v0.1.0 // indirect
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	gopkg.in/ini.v1 v1.62.0
