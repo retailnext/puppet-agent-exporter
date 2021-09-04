@@ -12,6 +12,6 @@ require (
 	golang.org/x/term v0.0.0-20210615171337-6886f2dfbf5b
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
-	gopkg.in/ini.v1 v1.62.0
+	gopkg.in/ini.v1 v1.62.1
 	gopkg.in/yaml.v2 v2.4.0
 )
