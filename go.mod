@@ -9,6 +9,6 @@ require (
 	go.uber.org/zap v1.21.0
 	golang.org/x/term v0.0.0-20220526004731-065cf7ba2467
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
-	gopkg.in/ini.v1 v1.66.4
+	gopkg.in/ini.v1 v1.66.5
 	gopkg.in/yaml.v2 v2.4.0
 )
