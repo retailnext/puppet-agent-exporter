@@ -3,7 +3,7 @@ module github.com/retailnext/puppet-agent-exporter
 go 1.19
 
 require (
-	github.com/prometheus/client_golang v1.13.0
+	github.com/prometheus/client_golang v1.13.1
 	go.uber.org/multierr v1.8.0
 	go.uber.org/zap v1.23.0
 	golang.org/x/term v0.1.0
