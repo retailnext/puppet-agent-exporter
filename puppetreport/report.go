@@ -24,7 +24,7 @@ import (
 )
 
 type runReport struct {
-	ConfigurationVersion float64                     `yaml:"configuration_version"`
+	ConfigurationVersion string                      `yaml:"configuration_version"`
 	Time                 time.Time                   `yaml:"time"`
 	TransactionCompleted bool                        `yaml:"transaction_completed"`
 	ReportFormat         int                         `yaml:"report_format"`

@@ -26,7 +26,7 @@ func TestLoadReport(t *testing.T) {
 	expected := interpretedReport{
 		RunAt:          1618957125.5901103,
 		RunDuration:    17.199882286,
-		CatalogVersion: 1618957129,
+		CatalogVersion: "1618957129",
 		RunSuccess:     1,
 	}
 	if ir != expected {
