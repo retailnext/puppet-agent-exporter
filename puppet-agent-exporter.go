@@ -1,4 +1,4 @@
-// Copyright 2021 RetailNext, Inc.
+// Copyright 2023 RetailNext, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,13 +22,13 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/alecthomas/kingpin/v2"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/retailnext/puppet-agent-exporter/puppetconfig"
 	"github.com/retailnext/puppet-agent-exporter/puppetreport"
 	"go.uber.org/zap"
 	"golang.org/x/term"
-	"gopkg.in/alecthomas/kingpin.v2"
 )
 
 func setupLogger() func() {
