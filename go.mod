@@ -7,7 +7,7 @@ require (
 	go.uber.org/multierr v1.11.0
 	go.uber.org/zap v1.24.0
 	golang.org/x/term v0.6.0
-	gopkg.in/alecthomas/kingpin.v2 v2.2.6
+	gopkg.in/alecthomas/kingpin.v2 v2.3.2
 	gopkg.in/ini.v1 v1.67.0
 	gopkg.in/yaml.v2 v2.4.0
 )
