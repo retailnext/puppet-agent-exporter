@@ -14,7 +14,7 @@
         "^\\.github/workflows/go\\.yaml$"
       ],
       "matchStrings": [
-        "\\s+version: (?<currentValue>.*?) #(?<datasource>.*?): (?<lookupName>.*?)\\s"
+        "\\s+version: (?<currentValue>.*?) #(?<datasource>.*?): (?<depName>.*?)\\s"
       ]
     }
   ]
