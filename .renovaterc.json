@@ -3,19 +3,10 @@
     "config:base",
     ":semanticCommits",
     ":automergeAll",
-    ":gitSignOff"
+    ":gitSignOff",
+    "regexManagers:githubActionsVersions"
   ],
   "postUpdateOptions": [
     "gomodTidy"
-  ],
-  "regexManagers": [
-    {
-      "fileMatch": [
-        "^\\.github/workflows/go\\.yaml$"
-      ],
-      "matchStrings": [
-        "\\s+version: (?<currentValue>.*?) #(?<datasource>.*?): (?<depName>.*?)\\s"
-      ]
-    }
   ]
 }
