@@ -6,7 +6,9 @@
     ":gitSignOff",
     "regexManagers:githubActionsVersions"
   ],
+  "platformAutomerge": true,
   "postUpdateOptions": [
-    "gomodTidy"
+    "gomodTidy",
+    "gomodUpdateImportPaths"
   ]
 }
