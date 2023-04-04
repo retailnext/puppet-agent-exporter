@@ -1,4 +1,4 @@
-// Copyright 2021 RetailNext, Inc.
+// Copyright 2023 RetailNext, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import (
 )
 
 type runReport struct {
-	ConfigurationVersion float64                     `yaml:"configuration_version"`
+	ConfigurationVersion string                      `yaml:"configuration_version"`
 	Time                 time.Time                   `yaml:"time"`
 	TransactionCompleted bool                        `yaml:"transaction_completed"`
 	ReportFormat         int                         `yaml:"report_format"`

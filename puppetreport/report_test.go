@@ -1,4 +1,4 @@
-// Copyright 2021 RetailNext, Inc.
+// Copyright 2023 RetailNext, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ func TestLoadReport(t *testing.T) {
 	expected := interpretedReport{
 		RunAt:          1618957125.5901103,
 		RunDuration:    17.199882286,
-		CatalogVersion: 1618957129,
+		CatalogVersion: "1618957129",
 		RunSuccess:     1,
 	}
 	if ir != expected {
