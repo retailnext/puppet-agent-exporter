@@ -20,7 +20,7 @@ nfpms:
     formats:
       - deb
     license: Apache 2.0
-    homepage: https://github.com/dhaivat/apt-gcs
+    homepage: https://github.com/retailnext/puppet-agent-exporter
     maintainer: Erik Swanson <erik@retailnext.net>
     description: Prometheus Exporter for Puppet Agent
 checksum:

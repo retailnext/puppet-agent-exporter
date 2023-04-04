@@ -1,10 +1,21 @@
 {
   "extends": [
     "config:base",
+    ":semanticCommits",
     ":automergeAll",
     ":gitSignOff"
   ],
   "postUpdateOptions": [
     "gomodTidy"
+  ],
+  "regexManagers": [
+    {
+      "fileMatch": [
+        "^\\.github/workflows/go\\.yaml$"
+      ],
+      "matchStrings": [
+        "\\s+version: (?<currentValue>.*?) #(?<datasource>.*?): (?<lookupName>.*?)\\s"
+      ]
+    }
   ]
 }
