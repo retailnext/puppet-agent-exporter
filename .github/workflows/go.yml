@@ -39,7 +39,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         run: git fetch --prune --unshallow
       - name: Build (Snapshot)
-        uses: goreleaser/goreleaser-action@v3
+        uses: goreleaser/goreleaser-action@v4
         if: ${{ ! startsWith(github.ref, 'refs/tags/') }}
         with:
           version: latest
@@ -51,7 +51,7 @@ jobs:
           name: dist
           path: dist/*
       - name: Release
-        uses: goreleaser/goreleaser-action@v3
+        uses: goreleaser/goreleaser-action@v4
         if: startsWith(github.ref, 'refs/tags/')
         with:
           version: latest
