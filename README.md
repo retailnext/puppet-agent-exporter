@@ -19,13 +19,13 @@ your environment that is discoverable by Prometheus.
 puppet_config{environment="",server="puppet.redacted"} 1
 # HELP puppet_last_catalog_version The version of the last attempted Puppet catalog.
 # TYPE puppet_last_catalog_version gauge
-puppet_last_catalog_version 1.618981114e+09
+puppet_last_catalog_version{version="1680640107"} 1
 # HELP puppet_last_run_at_seconds Time of the last Puppet run.
 # TYPE puppet_last_run_at_seconds gauge
-puppet_last_run_at_seconds 1.61898111071525e+09
+puppet_last_run_at_seconds 1.6806401024160552e+09
 # HELP puppet_last_run_duration_seconds Duration of the last Puppet run.
 # TYPE puppet_last_run_duration_seconds gauge
-puppet_last_run_duration_seconds 15.629926791
+puppet_last_run_duration_seconds 28.023470087
 # HELP puppet_last_run_success 1 if the last Puppet run was successful.
 # TYPE puppet_last_run_success gauge
 puppet_last_run_success 1
@@ -44,9 +44,6 @@ groups:
         for: 4h
       - alert: PuppetFailing
         expr: puppet_last_run_success == 0
-        for: 40m
-      - alert: StalePuppetCatalog
-        expr: time() - puppet_last_catalog_version > 3*60*60
         for: 40m
       - alert: LastPuppetTooLongAgo
         expr: time() - puppet_last_run_at_seconds > 3*60*60
