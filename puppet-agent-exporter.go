@@ -126,8 +126,8 @@ func run(ctx context.Context, listenAddress, telemetryPath string) (ok bool) {
 func main() {
 	// Flag definitions copied from github.com/prometheus/node_exporter
 	var (
-		listenAddress = kingpin.Flag("web.listen-address", "Address on which to expose metrics and web interface.").Default(":9819").String()
-		telemetryPath = kingpin.Flag("web.telemetry-path", "Path under which to expose metrics.").Default("/metrics").String()
+		listenAddress = kingpin.Flag("web.listen-address", "Address on which to expose metrics and web interface.").OverrideDefaultFromEnvar("PAE_LISTEN").Default(":9819").String()
+		telemetryPath = kingpin.Flag("web.telemetry-path", "Path under which to expose metrics.").OverrideDefaultFromEnvar("PAE_PATH").Default("/metrics").String()
 	)
 	kingpin.HelpFlag.Short('h')
 	kingpin.Parse()
