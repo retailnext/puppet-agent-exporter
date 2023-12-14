@@ -48,7 +48,7 @@ jobs:
           version: latest
           args: --rm-dist --skip-publish --snapshot
       - name: Upload Artifacts (Snapshot)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ ! startsWith(github.ref, 'refs/tags/') }}
         with:
           name: dist
