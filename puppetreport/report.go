@@ -21,6 +21,8 @@ import (
 
 	"go.uber.org/multierr"
 	"gopkg.in/yaml.v3"
+
+	"github.com/retailnext/puppet-agent-exporter/internal/utils"
 )
 
 type runReport struct {
@@ -35,7 +37,7 @@ type runReport struct {
 
 func (r runReport) interpret() interpretedReport {
 	result := interpretedReport{
-		RunAt:          asUnixSeconds(r.Time),
+		RunAt:          utils.UnixSeconds(r.Time),
 		RunDuration:    r.totalDuration(),
 		CatalogVersion: r.ConfigurationVersion,
 	}
@@ -43,10 +45,6 @@ func (r runReport) interpret() interpretedReport {
 		result.RunSuccess = 1
 	}
 	return result
-}
-
-func asUnixSeconds(t time.Time) float64 {
-	return float64(t.Unix()) + (float64(t.Nanosecond()) / 1e+9)
 }
 
 func (r runReport) totalDuration() float64 {
