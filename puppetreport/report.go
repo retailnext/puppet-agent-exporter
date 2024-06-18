@@ -66,15 +66,13 @@ func (r runReport) success() bool {
 	if !r.TransactionCompleted {
 		return false
 	}
-	var failed, ok int
+	var failed int
 	for _, item := range r.ResourceStatuses {
 		if item.Failed {
 			failed++
-		} else {
-			ok++
 		}
 	}
-	return ok > 0 && failed == 0
+	return failed == 0
 }
 
 type resourceStatus struct {
