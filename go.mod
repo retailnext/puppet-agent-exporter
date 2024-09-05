@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/alecthomas/kingpin/v2 v2.4.0
-	github.com/prometheus/client_golang v1.20.2
+	github.com/prometheus/client_golang v1.20.3
 	go.uber.org/multierr v1.11.0
 	go.uber.org/zap v1.27.0
 	golang.org/x/term v0.24.0
