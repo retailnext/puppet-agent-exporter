@@ -14,7 +14,12 @@
 
 package puppetreport
 
-import "github.com/prometheus/client_golang/prometheus"
+import (
+	"github.com/prometheus/client_golang/prometheus"
+
+	"github.com/retailnext/puppet-agent-exporter/internal/logging"
+	"github.com/retailnext/puppet-agent-exporter/internal/puppet"
+)
 
 var (
 	catalogVersionDesc = prometheus.NewDesc(
@@ -47,7 +52,7 @@ var (
 )
 
 type Collector struct {
-	Logger     Logger
+	Logger     logging.Logger
 	ReportPath string
 }
 
@@ -72,11 +77,7 @@ func (c Collector) reportPath() string {
 	if c.ReportPath != "" {
 		return c.ReportPath
 	}
-	return "/opt/puppetlabs/puppet/cache/state/last_run_report.yaml"
-}
-
-type Logger interface {
-	Errorw(msg string, keysAndValues ...interface{})
+	return puppet.DefaultLastRunReportFile
 }
 
 type interpretedReport struct {
