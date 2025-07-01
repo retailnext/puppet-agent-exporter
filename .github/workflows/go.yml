@@ -60,7 +60,7 @@ jobs:
           name: dist
           path: dist/*
       - name: Set up ko
-        uses: ko-build/setup-ko@v0.8
+        uses: ko-build/setup-ko@d982fec422852203cfb2053a8ec6ad302280d04d # v0.8
         if: startsWith(github.ref, 'refs/tags/')
         with:
           version: ${{ env.KO_VERSION }}
