@@ -26,7 +26,8 @@ kos:
   - id: puppet-agent-exporter-ko
     build: puppet-agent-exporter-build
     bare: true
-    base_import_paths: true
+    local_domain: "goreleaser.ko.local/puppet-agent-exporter"
+    preserve_import_paths: false
     platforms:
       - linux/amd64
       - linux/arm64
