@@ -12,6 +12,8 @@ env:
   GOLANGCI_LINT_VERSION: "v2.2.1"
   # renovate: datasource=github-releases depName=goreleaser/goreleaser versioning=semver-coerced
   GORELEASER_VERSION: "v2.10.2"
+  # renovate: datasource=github-releases depName=ko-build/ko versioning=semver-coerced
+  KO_VERSION: "v0.18.0"
 jobs:
   lint:
     name: Lint
@@ -30,6 +32,10 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -46,13 +52,18 @@ jobs:
         if: ${{ ! startsWith(github.ref, 'refs/tags/') }}
         with:
           version: ${{ env.GORELEASER_VERSION }}
-          args: --clean --skip=publish --snapshot
+          args: --clean --skip=ko,publish --snapshot
       - name: Upload Artifacts (Snapshot)
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: ${{ ! startsWith(github.ref, 'refs/tags/') }}
         with:
           name: dist
           path: dist/*
+      - name: Set up ko
+        uses: ko-build/setup-ko@v0.8
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          version: ${{ env.KO_VERSION }}
       - name: Release
         uses: goreleaser/goreleaser-action@9c156ee8a17a598857849441385a2041ef570552 # v6
         if: startsWith(github.ref, 'refs/tags/')

@@ -1,11 +1,16 @@
 ---
 version: 2
 project_name: puppet-agent-exporter
+env:
+  - KO_DOCKER_REPO={{ if index .Env "KO_DOCKER_REPO"  }}{{ .Env.KO_DOCKER_REPO }}{{ else }}ghcr.io/retailnext/puppet-agent-exporter{{ end }}
+gomod:
+  proxy: true
 before:
   hooks:
     - go mod tidy
 builds:
-  - binary: puppet-agent-exporter
+  - id: puppet-agent-exporter-build
+    binary: puppet-agent-exporter
     env:
       - CGO_ENABLED=0
     flags:
@@ -17,8 +22,21 @@ builds:
       - arm64
     ldflags:
       - -s -w
+kos:
+  - id: puppet-agent-exporter-ko
+    build: puppet-agent-exporter-build
+    base_import_paths: true
+    platforms:
+      - linux/amd64
+      - linux/arm64
+    tags:
+      - "v{{.Version}}"
+      - "{{if not .Prerelease}}{{if not .IsSnapshot}}{{if not .IsNightly}}latest{{end}}{{end}}{{end}}"
+      - "{{if not .Prerelease}}{{if not .IsSnapshot}}{{if not .IsNightly}}v{{.Major}}{{end}}{{end}}{{end}}"
+      - "{{if not .Prerelease}}{{if not .IsSnapshot}}{{if not .IsNightly}}v{{.Major}}.{{.Minor}}{{end}}{{end}}{{end}}"
 nfpms:
-  - package_name: puppet-agent-exporter
+  - id: puppet-agent-exporter-nfpm
+    package_name: puppet-agent-exporter
     formats:
       - deb
     license: Apache 2.0
