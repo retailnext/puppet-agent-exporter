@@ -10,6 +10,8 @@ on:
 env:
   # renovate: datasource=github-releases depName=golangci/golangci-lint versioning=semver-coerced
   GOLANGCI_LINT_VERSION: "v2.2.1"
+  # renovate: datasource=github-releases depName=goreleaser/goreleaser versioning=semver-coerced
+  GORELEASER_VERSION: "v2.10.2"
 jobs:
   lint:
     name: Lint
@@ -45,8 +47,8 @@ jobs:
         uses: goreleaser/goreleaser-action@v6
         if: ${{ ! startsWith(github.ref, 'refs/tags/') }}
         with:
-          version: latest
-          args: --rm-dist --skip-publish --snapshot
+          version: ${{ env.GORELEASER_VERSION }}
+          args: --clean --skip=publish --snapshot
       - name: Upload Artifacts (Snapshot)
         uses: actions/upload-artifact@v4
         if: ${{ ! startsWith(github.ref, 'refs/tags/') }}
@@ -57,7 +59,7 @@ jobs:
         uses: goreleaser/goreleaser-action@v6
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          version: latest
-          args: release --rm-dist
+          version: ${{ env.GORELEASER_VERSION }}
+          args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
