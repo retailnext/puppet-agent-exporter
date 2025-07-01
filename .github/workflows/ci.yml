@@ -1,10 +1,11 @@
 ---
-name: Go
+name: CI
 on:
   push:
     tags:
       - 'v*'
     branches:
+      - 'main'
       - 'master'
   pull_request:
 env:
@@ -15,22 +16,8 @@ env:
   # renovate: datasource=github-releases depName=ko-build/ko versioning=semver-coerced
   KO_VERSION: "v0.18.0"
 jobs:
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-      - name: Set up Go
-        uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5
-        with:
-          go-version-file: 'go.mod'
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@4afd733a84b1f43292c63897423277bb7f4313a9 # v8
-        with:
-          version: ${{ env.GOLANGCI_LINT_VERSION }}
-  build:
-    name: Build
+  go:
+    name: Go
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -45,7 +32,11 @@ jobs:
         uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5
         with:
           go-version-file: 'go.mod'
-      - name: Test
+      - name: Run golangci-lint
+        uses: golangci/golangci-lint-action@4afd733a84b1f43292c63897423277bb7f4313a9 # v8
+        with:
+          version: ${{ env.GOLANGCI_LINT_VERSION }}
+      - name: Run tests
         run: go test -v ./...
       - name: Build (Snapshot)
         uses: goreleaser/goreleaser-action@9c156ee8a17a598857849441385a2041ef570552 # v6
