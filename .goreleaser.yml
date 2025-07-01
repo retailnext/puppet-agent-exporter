@@ -25,6 +25,7 @@ builds:
 kos:
   - id: puppet-agent-exporter-ko
     build: puppet-agent-exporter-build
+    bare: true
     base_import_paths: true
     platforms:
       - linux/amd64
