@@ -33,16 +33,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 0
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version-file: 'go.mod'
       - name: Test
         run: go test -v ./...
-      - name: Unshallow
-        # If we are building a tag/release, fetch history so the changelog can be generated.
-        if: startsWith(github.ref, 'refs/tags/')
-        run: git fetch --prune --unshallow
       - name: Build (Snapshot)
         uses: goreleaser/goreleaser-action@v6
         if: ${{ ! startsWith(github.ref, 'refs/tags/') }}
