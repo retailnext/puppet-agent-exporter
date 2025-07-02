@@ -26,6 +26,7 @@ kos:
   - id: puppet-agent-exporter-ko
     build: puppet-agent-exporter-build
     bare: true
+    base_image: 'gcr.io/distroless/static-debian12'
     local_domain: "goreleaser.ko.local/puppet-agent-exporter"
     preserve_import_paths: false
     platforms:
