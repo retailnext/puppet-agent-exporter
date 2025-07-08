@@ -1,6 +1,6 @@
 module github.com/retailnext/puppet-agent-exporter
 
-go 1.24.4
+go 1.24.5
 
 require (
 	github.com/alecthomas/kingpin/v2 v2.4.0
