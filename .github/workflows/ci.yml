@@ -12,7 +12,7 @@ env:
   # renovate: datasource=github-releases depName=golangci/golangci-lint versioning=semver-coerced
   GOLANGCI_LINT_VERSION: "v2.5.0"
   # renovate: datasource=github-releases depName=goreleaser/goreleaser versioning=semver-coerced
-  GORELEASER_VERSION: "v2.12.6"
+  GORELEASER_VERSION: "v2.12.7"
   # renovate: datasource=github-releases depName=ko-build/ko versioning=semver-coerced
   KO_VERSION: "v0.18.0"
 jobs:
