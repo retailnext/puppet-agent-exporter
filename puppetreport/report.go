@@ -35,9 +35,10 @@ type runReport struct {
 
 func (r runReport) interpret() interpretedReport {
 	result := interpretedReport{
-		RunAt:          asUnixSeconds(r.Time),
-		RunDuration:    -1,
-		CatalogVersion: r.ConfigurationVersion,
+		RunAt:                   asUnixSeconds(r.Time),
+		RunDuration:             -1,
+		CatalogVersion:          r.ConfigurationVersion,
+		ConfigRetrievalDuration: -1,
 	}
 	if r.success() {
 		result.RunSuccess = 1
@@ -82,6 +83,10 @@ func interpretTimeMetrics(m map[string]float64, r *interpretedReport) {
 	total, ok := m["total"]
 	if ok {
 		r.RunDuration = total
+	}
+	config_retrieval, ok := m["config_retrieval"]
+	if ok {
+		r.ConfigRetrievalDuration = config_retrieval
 	}
 }
 

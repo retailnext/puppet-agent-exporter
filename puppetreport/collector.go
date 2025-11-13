@@ -79,6 +79,13 @@ var (
 		[]string{"state"},
 		nil,
 	)
+
+	configRetrievalDurationDesc = prometheus.NewDesc(
+		"puppet_config_retrieval_duration_seconds",
+		"Duration of the config retrieval stage.",
+		nil,
+		nil,
+	)
 )
 
 type Collector struct {
@@ -95,6 +102,7 @@ func (c Collector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- resourcesStateDesc
 	ch <- changesTotalDesc
 	ch <- eventsTotalDesc
+	ch <- configRetrievalDurationDesc
 }
 
 func (c Collector) Collect(ch chan<- prometheus.Metric) {
@@ -119,15 +127,16 @@ type Logger interface {
 }
 
 type interpretedReport struct {
-	RunAt          float64
-	RunDuration    float64
-	CatalogVersion string
-	RunSuccess     float64
-	ResourceCount  float64
-	ChangeCount    float64
-	EventCount     float64
-	ResourceStates map[string]float64
-	EventStates    map[string]float64
+	RunAt                   float64
+	RunDuration             float64
+	CatalogVersion          string
+	RunSuccess              float64
+	ResourceCount           float64
+	ChangeCount             float64
+	EventCount              float64
+	ResourceStates          map[string]float64
+	EventStates             map[string]float64
+	ConfigRetrievalDuration float64
 }
 
 func (r interpretedReport) collect(ch chan<- prometheus.Metric) {
@@ -138,6 +147,7 @@ func (r interpretedReport) collect(ch chan<- prometheus.Metric) {
 	ch <- prometheus.MustNewConstMetric(resourcesTotalDesc, prometheus.GaugeValue, r.ResourceCount)
 	ch <- prometheus.MustNewConstMetric(changesTotalDesc, prometheus.GaugeValue, r.ChangeCount)
 	ch <- prometheus.MustNewConstMetric(eventsTotalDesc, prometheus.GaugeValue, r.EventCount)
+	ch <- prometheus.MustNewConstMetric(configRetrievalDurationDesc, prometheus.GaugeValue, r.ConfigRetrievalDuration)
 
 	for state, count := range r.ResourceStates {
 		ch <- prometheus.MustNewConstMetric(resourcesStateDesc, prometheus.GaugeValue, count, state)
