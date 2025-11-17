@@ -27,8 +27,9 @@ var configDesc = prometheus.NewDesc(
 )
 
 type Collector struct {
-	Logger     Logger
-	ConfigPath string
+	Logger        Logger
+	ConfigPath    string
+	ConfigSection string
 }
 
 func (c Collector) Describe(ch chan<- *prometheus.Desc) {
@@ -41,8 +42,9 @@ func (c Collector) Collect(ch chan<- prometheus.Metric) {
 		c.Logger.Errorw("puppet_open_config_failed", "err", err)
 		return
 	}
-	server := config.Section("main").Key("server").String()
-	environment := config.Section("main").Key("environment").String()
+	section := c.configSection()
+	server := config.Section(section).Key("server").String()
+	environment := config.Section(section).Key("environment").String()
 	ch <- prometheus.MustNewConstMetric(configDesc, prometheus.GaugeValue, 1, server, environment)
 }
 
@@ -51,6 +53,13 @@ func (c Collector) configPath() string {
 		return c.ConfigPath
 	}
 	return "/etc/puppetlabs/puppet/puppet.conf"
+}
+
+func (c Collector) configSection() string {
+	if c.ConfigSection != "" {
+		return c.ConfigSection
+	}
+	return "main"
 }
 
 type Logger interface {

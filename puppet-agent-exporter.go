@@ -31,6 +31,14 @@ import (
 	"golang.org/x/term"
 )
 
+type config struct {
+	listenAddress       string
+	telemetryPath       string
+	puppetReportFile    string
+	puppetConfigFile    string
+	puppetConfigSection string
+}
+
 func setupLogger() func() {
 	var logger *zap.Logger
 	var err error
@@ -78,22 +86,25 @@ var rootTemplate = template.Must(template.New("/").Parse(`<html>
 </html>
 `))
 
-func run(ctx context.Context, listenAddress, telemetryPath string) (ok bool) {
+func run(ctx context.Context, cfg *config) (ok bool) {
 	lgr := zap.S()
 
 	prometheus.DefaultRegisterer.MustRegister(puppetconfig.Collector{
-		Logger: lgr,
+		Logger:        lgr,
+		ConfigPath:    cfg.puppetConfigFile,
+		ConfigSection: cfg.puppetConfigSection,
 	})
 	prometheus.DefaultRegisterer.MustRegister(puppetreport.Collector{
-		Logger: lgr,
+		Logger:     lgr,
+		ReportPath: cfg.puppetReportFile,
 	})
 
 	mux := http.NewServeMux()
-	mux.Handle(telemetryPath, promhttp.Handler())
+	mux.Handle(cfg.telemetryPath, promhttp.Handler())
 	mux.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
-		_ = rootTemplate.Execute(writer, telemetryPath)
+		_ = rootTemplate.Execute(writer, cfg.telemetryPath)
 	})
-	server := &http.Server{Addr: listenAddress, Handler: mux}
+	server := &http.Server{Addr: cfg.listenAddress, Handler: mux}
 
 	resultCh := make(chan bool)
 	go func() {
@@ -125,10 +136,18 @@ func run(ctx context.Context, listenAddress, telemetryPath string) (ok bool) {
 
 func main() {
 	// Flag definitions copied from github.com/prometheus/node_exporter
-	var (
-		listenAddress = kingpin.Flag("web.listen-address", "Address on which to expose metrics and web interface.").Default(":9819").String()
-		telemetryPath = kingpin.Flag("web.telemetry-path", "Path under which to expose metrics.").Default("/metrics").String()
-	)
+	var cfg config
+
+	kingpin.Flag("web.listen-address", "Address on which to expose metrics and web interface.").
+		Default(":9819").StringVar(&cfg.listenAddress)
+	kingpin.Flag("web.telemetry-path", "Path under which to expose metrics.").
+		Default("/metrics").StringVar(&cfg.telemetryPath)
+	kingpin.Flag("puppet.report-file", "Path to the Puppet run report.").
+		Default("/opt/puppetlabs/puppet/cache/state/last_run_report.yaml").StringVar(&cfg.puppetReportFile)
+	kingpin.Flag("puppet.config-file", "Path to the Puppet configuration.").
+		Default("/etc/puppetlabs/puppet/puppet.conf").StringVar(&cfg.puppetConfigFile)
+	kingpin.Flag("puppet.config-section", "Stanza to consider in the Puppet configuration.").
+		Default("main").StringVar(&cfg.puppetConfigSection)
 	kingpin.HelpFlag.Short('h')
 	kingpin.Parse()
 
@@ -138,7 +157,7 @@ func main() {
 	ctx, onExit := setupInterruptContext()
 	defer onExit()
 
-	if ok := run(ctx, *listenAddress, *telemetryPath); !ok {
+	if ok := run(ctx, &cfg); !ok {
 		os.Exit(1)
 	}
 }
