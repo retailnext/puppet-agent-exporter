@@ -44,6 +44,48 @@ var (
 		nil,
 		nil,
 	)
+
+	resourcesTotalDesc = prometheus.NewDesc(
+		"puppet_last_catalog_resources_total",
+		"Resources managed during the last Puppet run",
+		nil,
+		nil,
+	)
+
+	resourcesStateDesc = prometheus.NewDesc(
+		"puppet_last_catalog_resources",
+		"Resource states encountered during the last Puppet run",
+		[]string{"state"},
+		nil,
+	)
+
+	changesTotalDesc = prometheus.NewDesc(
+		"puppet_last_catalog_changes_total",
+		"Applied node changes during the last Puppet run",
+		nil,
+		nil,
+	)
+
+	eventsTotalDesc = prometheus.NewDesc(
+		"puppet_last_catalog_events_total",
+		"Events fired during the last Puppet run",
+		nil,
+		nil,
+	)
+
+	eventsStateDesc = prometheus.NewDesc(
+		"puppet_last_catalog_events",
+		"Events states encountered during the last Puppet run",
+		[]string{"state"},
+		nil,
+	)
+
+	configRetrievalDurationDesc = prometheus.NewDesc(
+		"puppet_config_retrieval_duration_seconds",
+		"Duration of the config retrieval stage.",
+		nil,
+		nil,
+	)
 )
 
 type Collector struct {
@@ -56,6 +98,11 @@ func (c Collector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- runAtDesc
 	ch <- runDurationDesc
 	ch <- runSuccessDesc
+	ch <- resourcesTotalDesc
+	ch <- resourcesStateDesc
+	ch <- changesTotalDesc
+	ch <- eventsTotalDesc
+	ch <- configRetrievalDurationDesc
 }
 
 func (c Collector) Collect(ch chan<- prometheus.Metric) {
@@ -80,10 +127,16 @@ type Logger interface {
 }
 
 type interpretedReport struct {
-	RunAt          float64
-	RunDuration    float64
-	CatalogVersion string
-	RunSuccess     float64
+	RunAt                   float64
+	RunDuration             float64
+	CatalogVersion          string
+	RunSuccess              float64
+	ResourceCount           float64
+	ChangeCount             float64
+	EventCount              float64
+	ResourceStates          map[string]float64
+	EventStates             map[string]float64
+	ConfigRetrievalDuration float64
 }
 
 func (r interpretedReport) collect(ch chan<- prometheus.Metric) {
@@ -91,4 +144,16 @@ func (r interpretedReport) collect(ch chan<- prometheus.Metric) {
 	ch <- prometheus.MustNewConstMetric(runAtDesc, prometheus.GaugeValue, r.RunAt)
 	ch <- prometheus.MustNewConstMetric(runDurationDesc, prometheus.GaugeValue, r.RunDuration)
 	ch <- prometheus.MustNewConstMetric(runSuccessDesc, prometheus.GaugeValue, r.RunSuccess)
+	ch <- prometheus.MustNewConstMetric(resourcesTotalDesc, prometheus.GaugeValue, r.ResourceCount)
+	ch <- prometheus.MustNewConstMetric(changesTotalDesc, prometheus.GaugeValue, r.ChangeCount)
+	ch <- prometheus.MustNewConstMetric(eventsTotalDesc, prometheus.GaugeValue, r.EventCount)
+	ch <- prometheus.MustNewConstMetric(configRetrievalDurationDesc, prometheus.GaugeValue, r.ConfigRetrievalDuration)
+
+	for state, count := range r.ResourceStates {
+		ch <- prometheus.MustNewConstMetric(resourcesStateDesc, prometheus.GaugeValue, count, state)
+	}
+
+	for state, count := range r.EventStates {
+		ch <- prometheus.MustNewConstMetric(eventsStateDesc, prometheus.GaugeValue, count, state)
+	}
 }

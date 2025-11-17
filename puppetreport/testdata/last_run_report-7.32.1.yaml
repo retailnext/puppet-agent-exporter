@@ -1,0 +1,312 @@
+--- !ruby/object:Puppet::Transaction::Report
+host: 9ed5cab53d0b
+time: '2024-09-08T06:20:38.356112004+00:00'
+configuration_version: 1725776438
+transaction_uuid: cf84c2e9-cdb2-451a-9908-f9aaf0cb92c7
+report_format: 12
+puppet_version: 7.32.1
+status: unchanged
+transaction_completed: true
+noop: false
+noop_pending: false
+environment: production
+logs:
+- level: info
+  message: Using environment 'production'
+  source: Puppet
+  tags:
+  - info
+  time: '2024-09-08T06:20:38.356331099+00:00'
+  file: 
+  line: 
+- level: info
+  message: Applying configuration version '1725776438'
+  source: Puppet
+  tags:
+  - info
+  time: '2024-09-08T06:20:38.356512994+00:00'
+  file: 
+  line: 
+- level: info
+  message: Creating state file /opt/puppetlabs/puppet/cache/state/state.yaml
+  source: Puppet
+  tags:
+  - info
+  time: '2024-09-08T06:20:38.359460233+00:00'
+  file: 
+  line: 
+- level: notice
+  message: Applied catalog in 0.01 seconds
+  source: Puppet
+  tags:
+  - notice
+  time: '2024-09-08T06:20:38.362058870+00:00'
+  file: 
+  line: 
+metrics:
+  resources:
+    name: resources
+    label: Resources
+    values:
+    - - total
+      - Total
+      - 8
+    - - skipped
+      - Skipped
+      - 0
+    - - failed
+      - Failed
+      - 0
+    - - failed_to_restart
+      - Failed to restart
+      - 0
+    - - restarted
+      - Restarted
+      - 0
+    - - changed
+      - Changed
+      - 0
+    - - out_of_sync
+      - Out of sync
+      - 0
+    - - scheduled
+      - Scheduled
+      - 0
+    - - corrective_change
+      - Corrective change
+      - 0
+  time:
+    name: time
+    label: Time
+    values:
+    - - file
+      - File
+      - 0.000150676
+    - - schedule
+      - Schedule
+      - 0.00019791699999999998
+    - - filebucket
+      - Filebucket
+      - 4.8181e-05
+    - - config_retrieval
+      - Config retrieval
+      - 0.036613366
+    - - transaction_evaluation
+      - Transaction evaluation
+      - 0.002930847000243375
+    - - catalog_application
+      - Catalog application
+      - 0.005560303000038402
+    - - total
+      - Total
+      - 0.006013873
+  changes:
+    name: changes
+    label: Changes
+    values:
+    - - total
+      - Total
+      - 0
+  events:
+    name: events
+    label: Events
+    values:
+    - - total
+      - Total
+      - 0
+    - - failure
+      - Failure
+      - 0
+    - - success
+      - Success
+      - 0
+resource_statuses:
+  File[/etc/gaff/bac]:
+    title: "/etc/gaff/bac"
+    file: "/src/init.pp"
+    line: 1
+    resource: File[/etc/gaff/bac]
+    resource_type: File
+    provider_used: posix
+    containment_path:
+    - Stage[main]
+    - Main
+    - File[/etc/gaff/bac]
+    evaluation_time: 0.000150676
+    tags:
+    - file
+    - class
+    time: '2024-09-08T06:20:38.358416644+00:00'
+    failed: false
+    failed_to_restart: false
+    changed: false
+    out_of_sync: false
+    skipped: false
+    change_count: 0
+    out_of_sync_count: 0
+    events: []
+    corrective_change: false
+  Schedule[puppet]:
+    title: puppet
+    file: 
+    line: 
+    resource: Schedule[puppet]
+    resource_type: Schedule
+    provider_used: 
+    containment_path:
+    - Schedule[puppet]
+    evaluation_time: 3.5036e-05
+    tags:
+    - schedule
+    - puppet
+    time: '2024-09-08T06:20:38.358811493+00:00'
+    failed: false
+    failed_to_restart: false
+    changed: false
+    out_of_sync: false
+    skipped: false
+    change_count: 0
+    out_of_sync_count: 0
+    events: []
+    corrective_change: false
+  Schedule[hourly]:
+    title: hourly
+    file: 
+    line: 
+    resource: Schedule[hourly]
+    resource_type: Schedule
+    provider_used: 
+    containment_path:
+    - Schedule[hourly]
+    evaluation_time: 2.6441e-05
+    tags:
+    - schedule
+    - hourly
+    time: '2024-09-08T06:20:38.358913055+00:00'
+    failed: false
+    failed_to_restart: false
+    changed: false
+    out_of_sync: false
+    skipped: false
+    change_count: 0
+    out_of_sync_count: 0
+    events: []
+    corrective_change: false
+  Schedule[daily]:
+    title: daily
+    file: 
+    line: 
+    resource: Schedule[daily]
+    resource_type: Schedule
+    provider_used: 
+    containment_path:
+    - Schedule[daily]
+    evaluation_time: 4.207e-05
+    tags:
+    - schedule
+    - daily
+    time: '2024-09-08T06:20:38.358983970+00:00'
+    failed: false
+    failed_to_restart: false
+    changed: false
+    out_of_sync: false
+    skipped: false
+    change_count: 0
+    out_of_sync_count: 0
+    events: []
+    corrective_change: false
+  Schedule[weekly]:
+    title: weekly
+    file: 
+    line: 
+    resource: Schedule[weekly]
+    resource_type: Schedule
+    provider_used: 
+    containment_path:
+    - Schedule[weekly]
+    evaluation_time: 2.6801e-05
+    tags:
+    - schedule
+    - weekly
+    time: '2024-09-08T06:20:38.359067168+00:00'
+    failed: false
+    failed_to_restart: false
+    changed: false
+    out_of_sync: false
+    skipped: false
+    change_count: 0
+    out_of_sync_count: 0
+    events: []
+    corrective_change: false
+  Schedule[monthly]:
+    title: monthly
+    file: 
+    line: 
+    resource: Schedule[monthly]
+    resource_type: Schedule
+    provider_used: 
+    containment_path:
+    - Schedule[monthly]
+    evaluation_time: 2.611e-05
+    tags:
+    - schedule
+    - monthly
+    time: '2024-09-08T06:20:38.359152850+00:00'
+    failed: false
+    failed_to_restart: false
+    changed: false
+    out_of_sync: false
+    skipped: false
+    change_count: 0
+    out_of_sync_count: 0
+    events: []
+    corrective_change: false
+  Schedule[never]:
+    title: never
+    file: 
+    line: 
+    resource: Schedule[never]
+    resource_type: Schedule
+    provider_used: 
+    containment_path:
+    - Schedule[never]
+    evaluation_time: 4.1459e-05
+    tags:
+    - schedule
+    - never
+    time: '2024-09-08T06:20:38.359222352+00:00'
+    failed: false
+    failed_to_restart: false
+    changed: false
+    out_of_sync: false
+    skipped: false
+    change_count: 0
+    out_of_sync_count: 0
+    events: []
+    corrective_change: false
+  Filebucket[puppet]:
+    title: puppet
+    file: 
+    line: 
+    resource: Filebucket[puppet]
+    resource_type: Filebucket
+    provider_used: 
+    containment_path:
+    - Filebucket[puppet]
+    evaluation_time: 4.8181e-05
+    tags:
+    - filebucket
+    - puppet
+    time: '2024-09-08T06:20:38.359335517+00:00'
+    failed: false
+    failed_to_restart: false
+    changed: false
+    out_of_sync: false
+    skipped: false
+    change_count: 0
+    out_of_sync_count: 0
+    events: []
+    corrective_change: false
+corrective_change: false
+catalog_uuid: 323e4988-dd80-4fc2-80d9-be9047e670c6
+cached_catalog_status: not_used
