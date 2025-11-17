@@ -32,10 +32,11 @@ import (
 )
 
 type config struct {
-	listenAddress    string
-	telemetryPath    string
-	puppetReportFile string
-	puppetConfigFile string
+	listenAddress       string
+	telemetryPath       string
+	puppetReportFile    string
+	puppetConfigFile    string
+	puppetConfigSection string
 }
 
 func setupLogger() func() {
@@ -89,8 +90,9 @@ func run(ctx context.Context, cfg *config) (ok bool) {
 	lgr := zap.S()
 
 	prometheus.DefaultRegisterer.MustRegister(puppetconfig.Collector{
-		Logger:     lgr,
-		ConfigPath: cfg.puppetConfigFile,
+		Logger:        lgr,
+		ConfigPath:    cfg.puppetConfigFile,
+		ConfigSection: cfg.puppetConfigSection,
 	})
 	prometheus.DefaultRegisterer.MustRegister(puppetreport.Collector{
 		Logger:     lgr,
@@ -144,6 +146,8 @@ func main() {
 		Default("/opt/puppetlabs/puppet/cache/state/last_run_report.yaml").StringVar(&cfg.puppetReportFile)
 	kingpin.Flag("puppet.config-file", "Path to the Puppet configuration.").
 		Default("/etc/puppetlabs/puppet/puppet.conf").StringVar(&cfg.puppetConfigFile)
+	kingpin.Flag("puppet.config-section", "Stanza to consider in the Puppet configuration.").
+		Default("main").StringVar(&cfg.puppetConfigSection)
 	kingpin.HelpFlag.Short('h')
 	kingpin.Parse()
 
