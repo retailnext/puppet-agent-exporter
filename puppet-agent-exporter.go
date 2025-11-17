@@ -25,8 +25,8 @@ import (
 	"github.com/alecthomas/kingpin/v2"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/retailnext/puppet-agent-exporter/puppetconfig"
-	"github.com/retailnext/puppet-agent-exporter/puppetreport"
+	"github.com/cernops/puppet-agent-exporter/puppetconfig"
+	"github.com/cernops/puppet-agent-exporter/puppetreport"
 	"go.uber.org/zap"
 	"golang.org/x/term"
 )
