@@ -1,0 +1,15 @@
+# SPDX-FileCopyrightText: 2025 CERN
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+[Unit]
+Description=Puppet Agent Exporter
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/puppet-agent-exporter
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
