@@ -1,0 +1,282 @@
+--- !ruby/object:Puppet::Transaction::Report
+host: 68266137cc3c
+time: '2024-09-08T06:17:10.602652100+00:00'
+configuration_version: 1725776230
+transaction_uuid: 52735400-bc28-47e3-93e5-ce6333e652c9
+report_format: 8
+puppet_version: 5.4.0
+status: unchanged
+transaction_completed: true
+noop: false
+noop_pending: false
+environment: production
+logs:
+- level: info
+  message: Applying configuration version '1725776230'
+  source: Puppet
+  tags:
+  - info
+  time: '2024-09-08T06:17:10.602954412+00:00'
+  file: 
+  line: 
+- level: info
+  message: Creating state file /var/cache/puppet/state/state.yaml
+  source: Puppet
+  tags:
+  - info
+  time: '2024-09-08T06:17:10.605238074+00:00'
+  file: 
+  line: 
+- level: notice
+  message: Applied catalog in 0.00 seconds
+  source: Puppet
+  tags:
+  - notice
+  time: '2024-09-08T06:17:10.607630773+00:00'
+  file: 
+  line: 
+metrics:
+  resources:
+    name: resources
+    label: Resources
+    values:
+    - - total
+      - Total
+      - 8
+    - - skipped
+      - Skipped
+      - 0
+    - - failed
+      - Failed
+      - 0
+    - - failed_to_restart
+      - Failed to restart
+      - 0
+    - - restarted
+      - Restarted
+      - 0
+    - - changed
+      - Changed
+      - 0
+    - - out_of_sync
+      - Out of sync
+      - 0
+    - - scheduled
+      - Scheduled
+      - 0
+    - - corrective_change
+      - Corrective change
+      - 0
+  time:
+    name: time
+    label: Time
+    values:
+    - - file
+      - File
+      - 0.000222811
+    - - schedule
+      - Schedule
+      - 0.00013191
+    - - filebucket
+      - Filebucket
+      - 3.132e-05
+    - - config_retrieval
+      - Config retrieval
+      - 0.031581229
+    - - total
+      - Total
+      - 0.03196727
+  changes:
+    name: changes
+    label: Changes
+    values:
+    - - total
+      - Total
+      - 0
+  events:
+    name: events
+    label: Events
+    values:
+    - - total
+      - Total
+      - 0
+    - - failure
+      - Failure
+      - 0
+    - - success
+      - Success
+      - 0
+resource_statuses:
+  File[/etc/gaff/bac]:
+    title: "/etc/gaff/bac"
+    file: "/src/init.pp"
+    line: 1
+    resource: File[/etc/gaff/bac]
+    resource_type: File
+    containment_path:
+    - Stage[main]
+    - Main
+    - File[/etc/gaff/bac]
+    evaluation_time: 0.000222811
+    tags:
+    - file
+    - class
+    time: '2024-09-08T06:17:10.604315689+00:00'
+    failed: false
+    changed: false
+    out_of_sync: false
+    skipped: false
+    change_count: 0
+    out_of_sync_count: 0
+    events: []
+    corrective_change: false
+  Schedule[puppet]:
+    title: puppet
+    file: 
+    line: 
+    resource: Schedule[puppet]
+    resource_type: Schedule
+    containment_path:
+    - Schedule[puppet]
+    evaluation_time: 2.637e-05
+    tags:
+    - schedule
+    - puppet
+    time: '2024-09-08T06:17:10.604734982+00:00'
+    failed: false
+    changed: false
+    out_of_sync: false
+    skipped: false
+    change_count: 0
+    out_of_sync_count: 0
+    events: []
+    corrective_change: false
+  Schedule[hourly]:
+    title: hourly
+    file: 
+    line: 
+    resource: Schedule[hourly]
+    resource_type: Schedule
+    containment_path:
+    - Schedule[hourly]
+    evaluation_time: 2.3825e-05
+    tags:
+    - schedule
+    - hourly
+    time: '2024-09-08T06:17:10.604798402+00:00'
+    failed: false
+    changed: false
+    out_of_sync: false
+    skipped: false
+    change_count: 0
+    out_of_sync_count: 0
+    events: []
+    corrective_change: false
+  Schedule[daily]:
+    title: daily
+    file: 
+    line: 
+    resource: Schedule[daily]
+    resource_type: Schedule
+    containment_path:
+    - Schedule[daily]
+    evaluation_time: 2.2232e-05
+    tags:
+    - schedule
+    - daily
+    time: '2024-09-08T06:17:10.604870268+00:00'
+    failed: false
+    changed: false
+    out_of_sync: false
+    skipped: false
+    change_count: 0
+    out_of_sync_count: 0
+    events: []
+    corrective_change: false
+  Schedule[weekly]:
+    title: weekly
+    file: 
+    line: 
+    resource: Schedule[weekly]
+    resource_type: Schedule
+    containment_path:
+    - Schedule[weekly]
+    evaluation_time: 1.9457e-05
+    tags:
+    - schedule
+    - weekly
+    time: '2024-09-08T06:17:10.604943757+00:00'
+    failed: false
+    changed: false
+    out_of_sync: false
+    skipped: false
+    change_count: 0
+    out_of_sync_count: 0
+    events: []
+    corrective_change: false
+  Schedule[monthly]:
+    title: monthly
+    file: 
+    line: 
+    resource: Schedule[monthly]
+    resource_type: Schedule
+    containment_path:
+    - Schedule[monthly]
+    evaluation_time: 2.0219e-05
+    tags:
+    - schedule
+    - monthly
+    time: '2024-09-08T06:17:10.604999212+00:00'
+    failed: false
+    changed: false
+    out_of_sync: false
+    skipped: false
+    change_count: 0
+    out_of_sync_count: 0
+    events: []
+    corrective_change: false
+  Schedule[never]:
+    title: never
+    file: 
+    line: 
+    resource: Schedule[never]
+    resource_type: Schedule
+    containment_path:
+    - Schedule[never]
+    evaluation_time: 1.9807e-05
+    tags:
+    - schedule
+    - never
+    time: '2024-09-08T06:17:10.605071850+00:00'
+    failed: false
+    changed: false
+    out_of_sync: false
+    skipped: false
+    change_count: 0
+    out_of_sync_count: 0
+    events: []
+    corrective_change: false
+  Filebucket[puppet]:
+    title: puppet
+    file: 
+    line: 
+    resource: Filebucket[puppet]
+    resource_type: Filebucket
+    containment_path:
+    - Filebucket[puppet]
+    evaluation_time: 3.132e-05
+    tags:
+    - filebucket
+    - puppet
+    time: '2024-09-08T06:17:10.605152933+00:00'
+    failed: false
+    changed: false
+    out_of_sync: false
+    skipped: false
+    change_count: 0
+    out_of_sync_count: 0
+    events: []
+    corrective_change: false
+corrective_change: false
+catalog_uuid: df324bbf-3ab5-45bb-832b-07386ad3f8d6
+cached_catalog_status: not_used
