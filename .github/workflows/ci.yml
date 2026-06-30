@@ -14,7 +14,7 @@ env:
   # renovate: datasource=github-releases depName=goreleaser/goreleaser versioning=semver-coerced
   GORELEASER_VERSION: "v2.16.0"
   # renovate: datasource=github-releases depName=ko-build/ko versioning=semver-coerced
-  KO_VERSION: "v0.19.0"
+  KO_VERSION: "v0.19.1"
 jobs:
   go:
     name: Go
