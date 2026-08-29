@@ -25,10 +25,12 @@ import (
 	"github.com/alecthomas/kingpin/v2"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/retailnext/puppet-agent-exporter/puppetconfig"
-	"github.com/retailnext/puppet-agent-exporter/puppetreport"
 	"go.uber.org/zap"
 	"golang.org/x/term"
+
+	"github.com/retailnext/puppet-agent-exporter/puppetconfig"
+	"github.com/retailnext/puppet-agent-exporter/puppetdisabled"
+	"github.com/retailnext/puppet-agent-exporter/puppetreport"
 )
 
 func setupLogger() func() {
@@ -85,6 +87,9 @@ func run(ctx context.Context, listenAddress, telemetryPath string) (ok bool) {
 		Logger: lgr,
 	})
 	prometheus.DefaultRegisterer.MustRegister(puppetreport.Collector{
+		Logger: lgr,
+	})
+	prometheus.DefaultRegisterer.MustRegister(puppetdisabled.Collector{
 		Logger: lgr,
 	})
 

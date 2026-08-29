@@ -12,46 +12,51 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package puppetconfig
+package puppetdisabled
 
 import (
+	"errors"
+	"os"
+
 	"github.com/prometheus/client_golang/prometheus"
-	"gopkg.in/ini.v1"
 
 	"github.com/retailnext/puppet-agent-exporter/internal/logging"
 	"github.com/retailnext/puppet-agent-exporter/internal/puppet"
+	"github.com/retailnext/puppet-agent-exporter/internal/utils"
 )
 
-var configDesc = prometheus.NewDesc(
-	"puppet_config",
-	"Puppet configuration.",
-	[]string{"server", "environment"},
+var disabledSinceDesc = prometheus.NewDesc(
+	"puppet_disabled_since_seconds",
+	"Time since when puppet has been disabled.",
+	nil,
 	nil,
 )
 
 type Collector struct {
-	Logger     logging.Logger
-	ConfigPath string
+	Logger       logging.Logger
+	LockfilePath string
 }
 
 func (c Collector) Describe(ch chan<- *prometheus.Desc) {
-	ch <- configDesc
+	ch <- disabledSinceDesc
 }
 
 func (c Collector) Collect(ch chan<- prometheus.Metric) {
-	config, err := ini.Load(c.configPath())
-	if err != nil {
-		c.Logger.Errorw("puppet_open_config_failed", "err", err)
+	dto, err := puppet.ParseAgentDisabledLockfile(c.lockfilePath())
+	if errors.Is(err, os.ErrNotExist) {
+		return // nothing to report
+	} else if err != nil {
+		c.Logger.Errorw("puppet_open_lockfile_failed", "err", err)
 		return
 	}
-	server := config.Section("main").Key("server").String()
-	environment := config.Section("main").Key("environment").String()
-	ch <- prometheus.MustNewConstMetric(configDesc, prometheus.GaugeValue, 1, server, environment)
+
+	disabledSince := utils.UnixSeconds(dto.DisabledSince)
+	ch <- prometheus.MustNewConstMetric(disabledSinceDesc, prometheus.GaugeValue, disabledSince)
 }
 
-func (c Collector) configPath() string {
-	if c.ConfigPath != "" {
-		return c.ConfigPath
+func (c Collector) lockfilePath() string {
+	if c.LockfilePath != "" {
+		return c.LockfilePath
 	}
-	return puppet.DefaultConfigFile
+	return puppet.DefaultAgentDisabledLockfile
 }
