@@ -36,30 +36,76 @@ type runReport struct {
 func (r runReport) interpret() interpretedReport {
 	result := interpretedReport{
 		RunAt:          asUnixSeconds(r.Time),
-		RunDuration:    r.totalDuration(),
+		RunDuration:    -1,
 		CatalogVersion: r.ConfigurationVersion,
 	}
 	if r.success() {
 		result.RunSuccess = 1
 	}
+
+	resourceMetrics, ok := r.Metrics["resources"]
+	if ok {
+		interpretResourceMetrics(resourceMetrics.Values(), &result)
+	}
+
+	timeMetrics, ok := r.Metrics["time"]
+	if ok {
+		interpretTimeMetrics(timeMetrics.Values(), &result)
+	}
+
+	changeMetrics, ok := r.Metrics["changes"]
+	if ok {
+		interpretChangeMetrics(changeMetrics.Values(), &result)
+	}
+
+	eventMetrics, ok := r.Metrics["events"]
+	if ok {
+		interpretEventMetrics(eventMetrics.Values(), &result)
+	}
+
 	return result
+}
+
+func interpretResourceMetrics(m map[string]float64, r *interpretedReport) {
+	r.ResourceStates = make(map[string]float64, len(m))
+
+	for l, v := range m {
+		if l == "total" {
+			r.ResourceCount = v
+		} else {
+			r.ResourceStates[l] = v
+		}
+	}
+}
+
+func interpretTimeMetrics(m map[string]float64, r *interpretedReport) {
+	total, ok := m["total"]
+	if ok {
+		r.RunDuration = total
+	}
+}
+
+func interpretChangeMetrics(m map[string]float64, r *interpretedReport) {
+	total, ok := m["total"]
+	if ok {
+		r.ChangeCount = total
+	}
+}
+
+func interpretEventMetrics(m map[string]float64, r *interpretedReport) {
+	r.EventStates = make(map[string]float64, len(m))
+
+	for l, v := range m {
+		if l == "total" {
+			r.EventCount = v
+		} else {
+			r.EventStates[l] = v
+		}
+	}
 }
 
 func asUnixSeconds(t time.Time) float64 {
 	return float64(t.Unix()) + (float64(t.Nanosecond()) / 1e+9)
-}
-
-func (r runReport) totalDuration() float64 {
-	timeMetrics, ok := r.Metrics["time"]
-	if !ok {
-		return -1
-	}
-	values := timeMetrics.Values()
-	total, ok := values["total"]
-	if !ok {
-		return -1
-	}
-	return total
 }
 
 func (r runReport) success() bool {
