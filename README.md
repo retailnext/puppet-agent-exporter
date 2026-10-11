@@ -29,6 +29,9 @@ puppet_last_run_duration_seconds 28.023470087
 # HELP puppet_last_run_success 1 if the last Puppet run was successful.
 # TYPE puppet_last_run_success gauge
 puppet_last_run_success 1
+# HELP puppet_disabled_since_seconds Unix timestamp since when puppet has been disabled.
+# TYPE puppet_disabled_since_seconds gauge
+puppet_disabled_since_seconds 1.6863428664914448e+09
 ```
 
 ### Example Alert Rules
